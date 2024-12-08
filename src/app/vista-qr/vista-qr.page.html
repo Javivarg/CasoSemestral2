@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <img src="assets/img/R.png" alt="DUOC UC" class="imagen-personalizada">
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="sigla && seccion && sala && fecha" class="scanned-data-container">
+    <h2 class="header-title">Datos Escaneados</h2>
+    <p class="result-text">{{ result }}</p>
+    <h2 class="header-title">Detalles Escaneados</h2>
+    <p><strong>Sigla:</strong> {{ sigla }}</p>
+    <p><strong>Sección:</strong> {{ seccion }}</p>
+    <p><strong>Sala:</strong> {{ sala }}</p>
+    <p><strong>Fecha:</strong> {{ fecha }}</p>
+    <div class="botones-container">
+      <ion-button class="boton-ingresar1" (click)="scan()">Volver a escanear</ion-button>
+      <ion-button class="boton-ingresar1" (click)="asistsave()">Guardar asistencia</ion-button>
+    </div>
+  </div>
+  <ion-button *ngIf="!result" class="boton-ingresar" (click)="scan()">Iniciar Escaneo</ion-button>
+</ion-content>
+
+
