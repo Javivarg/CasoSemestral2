@@ -1,24 +1,28 @@
 <ion-header>
   <ion-toolbar>
-    <img src="assets/img/R.png" alt="DUOC UC" class="imagen-personalizada">
+    <img src="assets/img/R.png" alt="Logo de DUOC UC" class="imagen-personalizada">
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+
+  <div *ngIf="errorMessage" class="error-message">
+    <p>{{ errorMessage }}</p>
+  </div>  
+
   <div *ngIf="sigla && seccion && sala && fecha" class="scanned-data-container">
     <h2 class="header-title">Datos Escaneados</h2>
-    <p class="result-text">{{ result }}</p>
+    <p class="result-text">{{ scannedResults[0] }}</p> <!-- Mostrar el primer resultado escaneado -->
     <h2 class="header-title">Detalles Escaneados</h2>
     <p><strong>Sigla:</strong> {{ sigla }}</p>
     <p><strong>Sección:</strong> {{ seccion }}</p>
     <p><strong>Sala:</strong> {{ sala }}</p>
     <p><strong>Fecha:</strong> {{ fecha }}</p>
     <div class="botones-container">
-      <ion-button class="boton-ingresar1" (click)="scan()">Volver a escanear</ion-button>
-      <ion-button class="boton-ingresar1" (click)="asistsave()">Guardar asistencia</ion-button>
+      <ion-button class="boton-ingresar1" (click)="scanBarcode()">Volver a escanear</ion-button>
     </div>
   </div>
-  <ion-button *ngIf="!result" class="boton-ingresar" (click)="scan()">Iniciar Escaneo</ion-button>
+
+  <!-- Mostrar este botón solo si no hay resultados escaneados -->
+  <ion-button *ngIf="scannedResults.length === 0" class="boton-ingresar" (click)="scanBarcode()">Iniciar Escaneo</ion-button>
 </ion-content>
-
-
