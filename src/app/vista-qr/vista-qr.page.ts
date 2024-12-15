@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { QrScannerServiceService } from '../services/qr-scanner-service.service'; // Ajusta la ruta si es necesario
+import { AlertController } from '@ionic/angular'; // Importa AlertController
 
 @Component({
   selector: 'app-vista-qr',
@@ -15,7 +16,7 @@ export class VistaQRPage implements OnInit {
   sala: string = '';
   fecha: string = '';
 
-  constructor(private qrScannerService: QrScannerServiceService) {}
+  constructor(private qrScannerService: QrScannerServiceService,private alertController: AlertController) {}
 
   async ngOnInit() {
     try {
@@ -24,6 +25,46 @@ export class VistaQRPage implements OnInit {
       this.errorMessage = 'Error al inicializar el escáner.';
       console.error(error);
     }
+  }
+
+  async SaveAsist() {
+    // Mostrar alerta de confirmación
+    const confirmAlert = await this.alertController.create({
+      header: 'Confirmar',
+      message: '¿Estás seguro de que deseas guardar la asistencia?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Guardado cancelado');
+          }
+        },
+        {
+          text: 'Guardar',
+          handler: async () => {
+            // Limpiar los campos
+            this.fecha = '';
+            this.sigla = '';
+            this.seccion = '';
+            this.sala = '';
+            this.errorMessage = null;
+            this.scannedResults = [];
+
+            // Mostrar mensaje de asistencia guardada
+            const savedAlert = await this.alertController.create({
+              header: 'Éxito',
+              message: 'Asistencia guardada.',
+              buttons: ['OK']
+            });
+
+            await savedAlert.present();
+          }
+        }
+      ]
+    });
+
+    await confirmAlert.present();
   }
 
   async scanBarcode() {
@@ -66,3 +107,4 @@ export class VistaQRPage implements OnInit {
     return 'Fecha inválida';
   }
 }
+

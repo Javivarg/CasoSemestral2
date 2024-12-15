@@ -7,7 +7,8 @@
 <ion-content>
 
   <div *ngIf="errorMessage" class="error-message">
-    <p>{{ errorMessage }}</p>
+    <p class="result-text">{{ errorMessage }}</p>
+    <ion-button class="boton-ingresar1" (click)="scanBarcode()">Volver a escanear</ion-button>
   </div>  
 
   <div *ngIf="sigla && seccion && sala && fecha" class="scanned-data-container">
@@ -20,6 +21,7 @@
     <p><strong>Fecha:</strong> {{ fecha }}</p>
     <div class="botones-container">
       <ion-button class="boton-ingresar1" (click)="scanBarcode()">Volver a escanear</ion-button>
+      <ion-button class="boton-ingresar2" (click)="SaveAsist()">Guardar Asistencia</ion-button>
     </div>
   </div>
 
